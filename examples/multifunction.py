@@ -1,3 +1,4 @@
+#examples/multifunction.py
 from cmdfunc import cmdfusion
 
 cmd = cmdfusion("Test with multiple function.")

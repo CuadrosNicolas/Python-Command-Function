@@ -11,13 +11,14 @@ class cmdfusion():
 		self.dct = {}
 		self.desc = desc
 
-	def parse(self,arg,*args):
+	def parse(self,arg='',*args):
 		"""
 		Parse an input using return the result.
 		If there is no input, try to parse sys.argv.
 		"""
 		if(len(args)):
-			arg = [arg]
+			if(type(arg)==str):
+				arg = [arg]
 			for i in args:
 				arg.append(i)
 		if(not(arg)):
@@ -32,7 +33,6 @@ class cmdfusion():
 		epilog += fnDesc
 		self.baseParser = argparse.ArgumentParser(formatter_class=argparse.RawDescriptionHelpFormatter,epilog=epilog,description=self.desc)
 		self.baseParser.add_argument('cmd',type=str,choices=choices)
-		print(arg)
 		result = self.baseParser.parse_args([arg[0]])
 		result = {k:v for k,v in result._get_kwargs()}
 		if('cmd' in result):

@@ -250,6 +250,56 @@ optional arguments:
 
 [RETURN] : <str>
 ```
+### Merging multiple function to build command line utility
+
+If you to build a command line utility that works like git for example. You need to use the cmdfusion class that allows to wrap multiple function and call them as one cmdfunc.
+
+For example:
+```python
+#examples/multifunction.py
+from cmdfunc import cmdfusion
+
+cmd = cmdfusion("Test with multiple function.")
+@cmd.add
+def plus(a:int,b:int)->int:
+	"""
+	plus operation
+	:param a: first number
+	:param b: second number
+	:return: a+b
+	"""
+	return a+b
+@cmd.add
+def minus(a:int,b:int)->int:
+	"""
+	minus operation
+	:param a: first number
+	:param b: second number
+	:return: a-b
+	"""
+	return a-b
+
+out = cmd.main(__name__)
+if(out != None):
+	print(out)
+```
+Output this help :
+```console
+usage: multifunction.py [-h] {plus,minus}
+
+Test with multiple function.
+
+positional arguments:
+  {plus,minus}
+
+optional arguments:
+  -h, --help    show this help message and exit
+
+description:
+        plus            plus operation
+        minus           minus operation
+```
+In this way, the first argument allow to choose one specific command, for each one of them you can use the '-h' to print the chosen one's help.
 
 ### Document your command function
 If you want to add information about your command or arguments you can use doc string that way :
