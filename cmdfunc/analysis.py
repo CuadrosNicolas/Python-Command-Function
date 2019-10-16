@@ -1,7 +1,7 @@
 """
 Script containing the funciton analysis process
 """
-from inspect import getfullargspec
+from inspect import getfullargspec,isfunction
 import re
 import argparse
 from typing import Tuple,List
@@ -89,6 +89,13 @@ class EnumHasNoTypeException(Exception):
 		self.t = t
 	def __str__(self):
 		return 'Enum type {} of argument {} doesn\'t have any value.'.format(self.t,self.n)
+
+class IsNotAFunctionException(Exception):
+	"""
+	Exception to throw when the input is not a function
+	"""
+	def __str__(self):
+		return 'Argument is not a function.'
 
 
 class FunctionArgument:
@@ -361,10 +368,12 @@ class FunctionArgParser():
 		Return the description of the function and its parameters using
 		the doc.
 		"""
+		if(not(isfunction(func))):
+			raise IsNotAFunctionException()
 		doc = func.__doc__
 		#Extract param docstring
 		params = FunctionArgParser.__paramReg.findall(doc) if doc else ''
-		desc = doc[0:FunctionArgParser.__paramReg.search(doc).span()[0]] if doc and FunctionArgParser.__paramReg.search(doc) else ''
+		desc = doc[0:FunctionArgParser.__paramReg.search(doc).span()[0]] if doc and FunctionArgParser.__paramReg.search(doc) else doc
 		desc = '\n'.join([s.strip() for s in desc.split('\n')]) if doc else ''
 		retDesc = ''
 		paramsDesc = {}
@@ -374,6 +383,7 @@ class FunctionArgParser():
 				paramsDesc[i[1]] = i[2].strip()
 			if(i[0]=="return"):
 				retDesc = i[2].strip()
+
 
 		return desc,paramsDesc,retDesc
 
@@ -425,7 +435,6 @@ class FunctionArgParser():
 			self.epilog = '\n\t[RETURN] '
 			self.epilog+=((self.ret.doc) if self.ret.doc else '')
 			self.epilog+=((': <'+typeRep(self.ret.type)+'>') if self.ret.type else '')
-
 	def toArgParse(self):
 		"""
 		Convert the analyzed function to an argparser.
@@ -438,6 +447,7 @@ class FunctionArgParser():
 	def parse(self,*arg,**kwargs):
 		"""
 		Parse an input using the function parser and return the result
+		If there is no input, try to parse sys.argv.
 		"""
 		parser = self.toArgParse()
 		if(parser):
@@ -450,6 +460,9 @@ class FunctionArgParser():
 					except:
 						raise WrongInputTypeException(k,value)
 			return self.ref(**out)
+
+	def __call__(self,*arg,**kwargs):
+		self.ref(*arg,**kwargs)
 
 	def main(self,__name__):
 		if(__name__=='__main__'):
