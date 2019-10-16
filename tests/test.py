@@ -1,5 +1,5 @@
 import unittest
-from cmdfunc import cmdfunc,UnsupportedTypeException,WrongInputTypeException,NonHomogenousEnumTypeException,EnumHasNoTypeException
+from cmdfunc import cmdfunc,UnsupportedTypeException,WrongInputTypeException,NonHomogenousEnumTypeException,EnumHasNoTypeException,cmdfusion
 from typing import Tuple,List
 from enum import Enum
 from functools import reduce
@@ -94,5 +94,15 @@ class TestCmdFunc(unittest.TestCase):
 		with self.assertRaises(UnsupportedTypeException):
 			cmdfunc(unsupTypeArg)
 
+	def test_multifunction(self):
+		cmd = cmdfusion("Test with multiple function.")
+		@cmd.add
+		def plus(a:int,b:int)->int:
+			return a+b
+		@cmd.add
+		def minus(a:int,b:int)->int:
+			return a-b
+		assert cmd.parse('plus','1','2')==3
+		assert cmd.parse(['minus','2','1'])==1
 if __name__ == '__main__':
-    unittest.main()
+	unittest.main()
