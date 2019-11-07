@@ -5,19 +5,29 @@
 This project aims to build an easy to use package allowing to use a python function directly as a command line script using the argparse module.
 
 When building a software, deep learning algorithm or even simple script; most of the time you will end up with one function that do all the job. But when you want to try or use it quickly you will have to use the python in command line or just edit your script each time you want to change your parameters. The best actual way for now is to use the argparse module to wrap your function with a command line interface but you will have to update it each type you change your function.
- 
+
 The point is that function is already what you want to call, and has already all the informations that you put in the argparse, so why not automate it ?
- 
+
 And this what this project is about using the function signature directly to produce an argparser.
 
 ## Installation
 
-For now the project is not available on PyPi and you have to clone this repository and add this 'cmdfunc' package directly in your project.
+### Via PyPI
+
+The project is available on PyPI and you can install using pip :
+```bash
+pip install autofunccli
+```
+### Using Github
+
+If you want to have the example and run the tests you can clone the repository from Github.
+
 ```bash
 git clone https://github.com/CuadrosNicolas/Python-Command-Function
 cd pythonFunctionCommand
 ```
-If you want to try the example and the tests just run this commands :
+
+To run the test :
 
 ```bash
 chmod +x ./setup.sh && setup.sh
@@ -28,7 +38,7 @@ Once you have done that you are ready to build your command function.
 You first need to import the class from the package
 
 ```python
-from cmdfunc import cmdfunc
+from autofunccli import cmdfunc
 ```
 Then you just have to use it to wrap your function and build a command function.
 
@@ -37,7 +47,7 @@ Then you just have to use it to wrap your function and build a command function.
 ### Basic usage
 ```python
 #examples/basic.py
-from cmdfunc import cmdfunc
+from autofunccli import cmdfunc
 #define a simple plus function
 def plus(a,b):
 	return a+b
@@ -84,7 +94,7 @@ If you run it again :
 3
 ```
 Now it's the right output !
-cmdfunc uses the type annotation for parsing the raw input allowing a great flexibility in time if you change your signature.
+autofunccli uses the type annotation for parsing the raw input allowing a great flexibility in time if you change your signature.
 
 Accepted type are the following :
 ```python
@@ -111,7 +121,7 @@ List,Tuple, Bool and Enum are special cases that you will know more about in the
 When using default value for arguments, they becomes optional argument for your command.
 ```python
 #examples/default.py
-from cmdfunc import cmdfunc
+from autofunccli import cmdfunc
 
 def  f(must:int,optional:int=0):
 	return must+optional
@@ -129,7 +139,7 @@ from typing import List,Tuple
 If you want to use list as arguments like using the nargs='+' in command argparse you have to specify your function argument as a List[T] type like in this example :
 ```python
 #examples/list.py
-from cmdfunc import cmdfunc
+from autofunccli import cmdfunc
 from typing import List
 from functools import reduce
 
@@ -159,7 +169,7 @@ Tuple can be seen as a special case of array with a finite number of element.
 In our cases if we want to have a function taking an array of 3 numbers for example to build a color, we need to proceed like this :
 ```python
 #examples/tuple.py
-from cmdfunc import cmdfunc
+from autofunccli import cmdfunc
 from typing import Tuple
 
 def color(c:Tuple[int,int,int])->str:
@@ -192,7 +202,7 @@ When using a boolean type, it will automatically be an optional argument with th
 For example the following function :
 ```python
 #examples/bool.py
-from cmdfunc import cmdfunc
+from autofunccli import cmdfunc
 
 def  isItTrue(b:bool):
 	if(b): return  'yes'
@@ -221,7 +231,7 @@ And the type be in the acceptedTypeArgs array.
 ```python
 #you have to import the Enum class first
 #examples/choices.py
-from cmdfunc import cmdfunc
+from autofunccli import cmdfunc
 
 #you have to import the Enum class first
 from enum import Enum
@@ -252,12 +262,12 @@ optional arguments:
 ```
 ### Merging multiple function to build command line utility
 
-If you to build a command line utility that works like git for example. You need to use the cmdfusion class that allows to wrap multiple function and call them as one cmdfunc.
+If you to build a command line utility that works like git for example. You need to use the cmdfusion class that allows to wrap multiple function and call them as one autofunccli.
 
 For example:
 ```python
 #examples/multifunction.py
-from cmdfunc import cmdfusion
+from autofunccli import cmdfusion
 
 cmd = cmdfusion("Test with multiple function.")
 @cmd.add
@@ -306,7 +316,7 @@ If you want to add information about your command or arguments you can use doc s
 
 ```python
 #examples/doc.py
-from cmdfunc import cmdfunc
+from autofunccli import cmdfunc
 from typing import List
 from functools import reduce
 
@@ -341,10 +351,6 @@ optional arguments:
 
 [RETURN] The sum of the list: <int>
 ```
-
-## ToDos
-
-- [ ] Post on PyPi
 
 ## Author
 

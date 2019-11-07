@@ -1,5 +1,5 @@
 import unittest
-from cmdfunc import cmdfunc,UnsupportedTypeException,WrongInputTypeException,NonHomogenousEnumTypeException,EnumHasNoTypeException,cmdfusion
+from autofunccli import cmdfunc,UnsupportedTypeException,WrongInputTypeException,NonHomogenousEnumTypeException,EnumHasNoTypeException,cmdfusion
 from typing import Tuple,List
 from enum import Enum
 from functools import reduce

@@ -1,5 +1,5 @@
 #examples/basic.py
-from cmdfunc import cmdfunc
+from autofunccli import cmdfunc
 #define a simple plus function
 def plus(a:int,b:int)->int:
 	return a+b

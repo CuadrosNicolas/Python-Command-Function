@@ -1,5 +1,5 @@
 #examples/tuple.py
-from cmdfunc import cmdfunc
+from autofunccli import cmdfunc
 from typing import Tuple
 
 def color(c:Tuple[int,int,int])->str:

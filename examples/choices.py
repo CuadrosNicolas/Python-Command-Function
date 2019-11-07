@@ -1,5 +1,5 @@
 #examples/choices.py
-from cmdfunc import cmdfunc
+from autofunccli import cmdfunc
 
 #you have to import the Enum class first
 from enum import Enum

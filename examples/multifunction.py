@@ -1,5 +1,5 @@
 #examples/multifunction.py
-from cmdfunc import cmdfusion
+from autofunccli import cmdfusion
 
 cmd = cmdfusion("Test with multiple function.")
 @cmd.add

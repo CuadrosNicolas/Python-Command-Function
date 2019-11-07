@@ -1,5 +1,5 @@
 #examples/default.py
-from cmdfunc import cmdfunc
+from autofunccli import cmdfunc
 
 def  f(must:int,optional:int=0):
 	return must+optional

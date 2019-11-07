@@ -1,5 +1,5 @@
 #examples/doc.py
-from cmdfunc import cmdfunc
+from autofunccli import cmdfunc
 from typing import List
 from functools import reduce
 

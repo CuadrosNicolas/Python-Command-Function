@@ -1,5 +1,5 @@
 #examples/bool.py
-from cmdfunc import cmdfunc
+from autofunccli import cmdfunc
 
 def  isItTrue(b:bool):
 	if(b): return  'yes'
